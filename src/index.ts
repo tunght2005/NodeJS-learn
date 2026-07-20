@@ -1,9 +1,14 @@
-import express, { type Express, type Request, type Response } from 'express'
+import express from 'express'
+import userRouter from './routes/users.routes'
 
-const app: Express = express()
+const app = express()
+const port = 3000
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!')
+// Sử dụng để định dạng xử lí data json (app handler)
+app.use(express.json())
+// -> Chuyển vào users để xử lí tài khoản (routes handler)
+app.use('/users', userRouter)
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
 })
-
-app.listen(3000)
