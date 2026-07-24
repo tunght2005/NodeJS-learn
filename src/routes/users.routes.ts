@@ -1,9 +1,16 @@
 import { Router } from 'express'
 import { loginController, registerController } from '~/controllers/users.controllers'
-import { loginValidator } from '~/middlewares/users.middlewares'
+import { loginValidator, registerValidator } from '~/middlewares/users.middlewares'
 const userRouter = Router()
 
 // xử lí post login -> loginValidator -> loginController
 userRouter.post('/login', loginValidator, loginController)
-userRouter.post('/register', registerController)
+
+/*
+ * Description: Register a new user
+ * Path: /register
+ * Methob: POST
+ * Body: { name: string, email: string, password: string, confirm_password: string, date_of_birth: ISO8601}
+ */
+userRouter.post('/register', registerValidator, registerController)
 export default userRouter
