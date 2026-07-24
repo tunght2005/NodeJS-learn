@@ -12,6 +12,14 @@ class UsersService {
     )
     return result
   }
+  //Nếu tốt thì tạo thêm 1 checkEmailExist để kiếm tra email có trùng với email trong db hay không
+  async checkEmailExist(email: string) {
+    const user = await databaseService.users.findOne({
+      email
+    })
+
+    return Boolean(user)
+  }
 }
 
 const usersService = new UsersService()

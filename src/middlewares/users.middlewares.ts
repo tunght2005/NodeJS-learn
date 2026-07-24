@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { checkSchema } from 'express-validator'
+import usersService from '~/services/users.services'
 import { validate } from '~/utils/validation'
 
 export const loginValidator = (req: Request, res: Response, next: NextFunction) => {
@@ -31,24 +32,16 @@ export const registerValidator = validate(
     email: {
       notEmpty: true,
       isEmail: true,
-      trim: true
-      //Nếu tốt thì tạo thêm 1 checkEmailExist để kiếm tra email có trùng với email trong db hay không
-      // Ví dụ tạo 1 hàm async checkEmailExist(email: string) {
-      //     const user = await database.users.findOne({
-      //         email
-      //     })
-
-      //     return Boolean(user)
-      // } Để kiểm tra email có trong db hay không ở folder services
-      // custom: {
-      //   options: async (value, { req }) => {
-      //     const isExist = await usersService.checkEmailExist(value)
-      //     if (isExist) {
-      //       throw new Error('Email already exists')
-      //     }
-      //     return true
-      //   }
-      // }
+      trim: true,
+      custom: {
+        options: async (value, { req }) => {
+          const isExist = await usersService.checkEmailExist(value)
+          if (isExist) {
+            throw new Error('Email already exists')
+          }
+          return true
+        }
+      }
     },
     password: {
       notEmpty: true,
