@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { loginController, registerController } from '~/controllers/users.controllers'
 import { loginValidator, registerValidator } from '~/middlewares/users.middlewares'
+import { wrapRequestHandler } from '~/utils/handlers'
 const userRouter = Router()
 
 // xử lí post login -> loginValidator -> loginController
@@ -12,5 +13,5 @@ userRouter.post('/login', loginValidator, loginController)
  * Methob: POST
  * Body: { name: string, email: string, password: string, confirm_password: string, date_of_birth: ISO8601}
  */
-userRouter.post('/register', registerValidator, registerController)
+userRouter.post('/register', registerValidator, wrapRequestHandler(registerController))
 export default userRouter
