@@ -34,3 +34,5 @@ export const logoutController = async (req: Request<ParamsDictionary, any, Logou
   const result = await usersService.logout(refresh_token)
   return res.json(result)
 }
+
+//Tạo refreshController
