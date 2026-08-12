@@ -1,5 +1,10 @@
 import { Router } from 'express'
-import { loginController, logoutController, registerController } from '~/controllers/users.controllers'
+import {
+  loginController,
+  logoutController,
+  refreshTokenController,
+  registerController
+} from '~/controllers/users.controllers'
 import {
   accessTokenValidator,
   loginValidator,
@@ -28,4 +33,13 @@ userRouter.post('/register', registerValidator, wrapRequestHandler(registerContr
  * Body: { refresh_token: string }
  */
 userRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapRequestHandler(logoutController))
+
+/**
+ * Description. Refresh token
+ * Path: /refresh-token
+ * Method: POST
+ * Body: { refresh_token: string }
+ */
+userRouter.post('/refresh-token', refreshTokenValidator, wrapRequestHandler(refreshTokenController))
+
 export default userRouter
