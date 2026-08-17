@@ -6,7 +6,8 @@ import {
   refreshTokenController,
   registerController,
   resendVerifyEmailController,
-  forgotPasswordController
+  forgotPasswordController,
+  verifyForgotPasswordController
 } from '~/controllers/users.controllers'
 import {
   accessTokenValidator,
@@ -14,7 +15,8 @@ import {
   forgotPasswordValidator,
   loginValidator,
   refreshTokenValidator,
-  registerValidator
+  registerValidator,
+  verifyForgotPasswordTokenValidator
 } from '~/middlewares/users.middlewares'
 import { wrapRequestHandler } from '~/utils/handlers'
 const userRouter = Router()
@@ -71,4 +73,17 @@ userRouter.post('/resend-verify-email', accessTokenValidator, wrapRequestHandler
  * Body: {email: string}
  */
 userRouter.post('/forgot-password', forgotPasswordValidator, wrapRequestHandler(forgotPasswordController))
+
+/**
+ * Description. Verify link in email to reset password
+ * Path: /verify-forgot-password
+ * Method: POST
+ * Body: {forgot_password_token: string}
+ */
+userRouter.post(
+  '/verify-forgot-password',
+  verifyForgotPasswordTokenValidator,
+  wrapRequestHandler(verifyForgotPasswordController)
+)
+
 export default userRouter
