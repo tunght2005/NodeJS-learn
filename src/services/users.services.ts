@@ -331,6 +331,23 @@ class UsersService {
       message: USERS_MESSAGES.UNFOLLOW_SUCCESS
     }
   }
+
+  async changePassword(user_id: string, new_password: string) {
+    await databaseService.users.updateOne(
+      { _id: new ObjectId(user_id) },
+      {
+        $set: {
+          password: hashPassword(new_password)
+        },
+        $currentDate: {
+          updated_at: true
+        }
+      }
+    )
+    return {
+      message: USERS_MESSAGES.CHANGE_PASSWORD_SUCCESS
+    }
+  }
   //Nếu tốt thì tạo thêm 1 checkEmailExist để kiếm tra email có trùng với email trong db hay không
   async checkEmailExist(email: string) {
     const user = await databaseService.users.findOne({
