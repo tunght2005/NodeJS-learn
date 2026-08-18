@@ -12,6 +12,7 @@ import databaseService from '~/services/database.services'
 import usersService from '~/services/users.services'
 import { hashPassword } from '~/utils/crypto'
 import { verifyToken } from '~/utils/jwt'
+import { REGEX_USERNAME } from '~/utils/regex'
 import { validate } from '~/utils/validation'
 
 const passwordSchema: ParamSchema = {
@@ -504,12 +505,18 @@ export const updateMeValidator = validate(
         },
         trim: true,
 
-        isLength: {
-          options: {
-            min: 1,
-            max: 50
-          },
-          errorMessage: USERS_MESSAGES.USERNAME_LENGTH
+        custom: {
+          options: async (value: string, { req }) => {
+            if (!REGEX_USERNAME.test(value)) {
+              throw Error(USERS_MESSAGES.USERNAME_INVALID)
+            }
+            const user = await databaseService.users.findOne({ username: value })
+            // Nếu đã tồn tại username này trong db
+            // thì chúng ta không cho phép update
+            if (user) {
+              throw Error(USERS_MESSAGES.USERNAME_EXISTED)
+            }
+          }
         }
       },
       avatar: imageSchema,
