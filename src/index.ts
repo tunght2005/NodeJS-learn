@@ -5,7 +5,7 @@ import { defaultErrorHandler } from './middlewares/error.middlewares'
 
 databaseService.connect()
 const app = express()
-const port = 3000
+const port = 4000
 
 // Sử dụng để định dạng xử lí data json (app handler)
 app.use(express.json())

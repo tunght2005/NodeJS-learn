@@ -34,6 +34,7 @@
   "dependencies": {
     "@types/jsonwebtoken": "^9.0.10",
     "@types/lodash": "^4.17.25",
+    "axios": "^1.19.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-validator": "^7.3.2",
