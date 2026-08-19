@@ -2,15 +2,22 @@ import express from 'express'
 import userRouter from './routes/users.routes'
 import databaseService from '~/services/database.services'
 import { defaultErrorHandler } from './middlewares/error.middlewares'
+import mediasRouter from './routes/medias.routes'
+import { initFolder } from './utils/file'
 
 databaseService.connect()
 const app = express()
 const port = 4000
 
+// Tạo folder upload
+initFolder()
+
 // Sử dụng để định dạng xử lí data json (app handler)
 app.use(express.json())
 // -> Chuyển vào users để xử lí tài khoản (routes handler)
 app.use('/users', userRouter)
+//Api cho upload ảnh
+app.use('/medias', mediasRouter)
 app.use(defaultErrorHandler)
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
