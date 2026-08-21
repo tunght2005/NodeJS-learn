@@ -11,3 +11,9 @@ export enum TokenType {
   ForgotPasswordToken,
   EmailVerifyToken
 }
+
+// Thêm đa dạng upload
+export enum MediaType {
+  Image,
+  Video
+}
