@@ -5,6 +5,7 @@ import databaseService from '~/services/database.services'
 import { defaultErrorHandler } from './middlewares/error.middlewares'
 import mediasRouter from './routes/medias.routes'
 import { initFolder } from './utils/file'
+import staticRouter from './routes/static.routes'
 config()
 
 databaseService.connect()
@@ -20,6 +21,9 @@ app.use(express.json())
 app.use('/users', userRouter)
 //Api cho upload ảnh
 app.use('/medias', mediasRouter)
+
+app.use('/static', staticRouter)
+
 app.use(defaultErrorHandler)
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
