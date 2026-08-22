@@ -49,6 +49,15 @@ export const serveM3u8Controller = (req: Request<{ id: string }>, res: Response,
   })
 }
 
+export const videoStatusController = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params
+  const result = await mediasService.getVideoStatus(id as string)
+  return res.json({
+    message: USERS_MESSAGES.GET_VIDEO_STATUS_SUCCESS,
+    result: result
+  })
+}
+
 export const serveSegmentController = (
   req: Request<{ id: string; v: string; segment: string }>,
   res: Response,
