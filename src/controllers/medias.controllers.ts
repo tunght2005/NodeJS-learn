@@ -40,6 +40,28 @@ export const uploadVideoHLSController = async (req: Request, res: Response, next
   })
 }
 
+export const serveM3u8Controller = (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
+  const { id } = req.params
+  return res.sendFile(path.resolve(UPLOAD_VIDEO_DIR, id, 'master.m3u8'), (err) => {
+    if (err) {
+      res.status((err as any).status).send('Not found')
+    }
+  })
+}
+
+export const serveSegmentController = (
+  req: Request<{ id: string; v: string; segment: string }>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id, v, segment } = req.params
+  return res.sendFile(path.resolve(UPLOAD_VIDEO_DIR, id, v, segment), (err) => {
+    if (err) {
+      res.status((err as any).status).send('Not found')
+    }
+  })
+}
+
 export const serveVideoStreamController = (req: Request<{ name: string }>, res: Response, next: NextFunction) => {
   const range = req.headers.range
   if (!range) {

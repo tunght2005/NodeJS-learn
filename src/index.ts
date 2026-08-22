@@ -7,12 +7,13 @@ import mediasRouter from './routes/medias.routes'
 import { initFolder } from './utils/file'
 import staticRouter from './routes/static.routes'
 import { UPLOAD_VIDEO_DIR } from './constants/dir'
+import cors from 'cors'
 config()
 
 databaseService.connect()
 const app = express()
 const port = process.env.PORT || 4000
-
+app.use(cors())
 // Tạo folder upload
 initFolder()
 
