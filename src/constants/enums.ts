@@ -15,5 +15,6 @@ export enum TokenType {
 // Thêm đa dạng upload
 export enum MediaType {
   Image,
-  Video
+  Video,
+  HLS
 }
